@@ -1,0 +1,82 @@
+
+## Data605-Assignment2
+
+**Hazal Gunduz**
+
+## 1. Problem set 1
+
+(1) Show that $A^{T}A \neq AA^{T}$ in general. (Proof and demonstration.)
+
+**Proof:** A $\neq$ B is not equal, just as $A^{T}A \neq AA^{T}$ is not equal.
+
+**Demonstration:** Matrix 3x3 of sequence 1 to 9:
+
+```{r}
+A = matrix(seq(1,9), nrow = 3, ncol = 3)
+A
+```
+
+
+```{r}
+A_T = t(A)
+A_T%*%A == A%*%A_T
+```
+
+As we see the $A^{T}A$ is not equal with $AA^{T}$
+
+(2) For a special type of square matrix A, we get  $A^{T}A$ = $AA^{T}$
+Under what conditions could this be true? (Hint: The Identity matrix I is an example of such a matrix).
+Please typeset your response using LaTeX mode in RStudio. If you do it in paper, please either scan or take a picture of the work and submit it. Please ensure that your image is legible and that your submissions are named using your first initial, last name, assignment and problem set within the assignment. E.g. LFulton_Assignment2_PS1.png
+
+As we know, any matrix multiplied by its identity is equal to the identity multiplied by the same matrix.
+So the condition will be true if the matrix identity matrix.
+
+
+```{r}
+A = matrix(c(3,1,2,1,3,1,2,1,3), nrow = 3)
+A
+```
+
+```{r}
+A_T = t(A)
+A_T%*%A == A%*%A_T
+```
+
+## 2. Problem set 2
+
+Matrix factorization is a very important problem. There are supercomputers built just to do matrix factorizations. Every second you are on an airplane, matrices are being factorized. Radars that track flights use a technique called Kalman filtering. At the heart of Kalman Filtering is a Matrix Factorization operation. Kalman Filters are solving linear systems of equations when they track your flight using radars. Write an R function to factorize a square matrix A into LU or LDU, whichever you prefer. Please submit your response in an R Markdown document using our class naming convention, E.g. LFulton_Assignment2_PS2.png
+You don’t have to worry about permuting rows of A and you can assume that A is less than 5x5, if you need to hard-code any variables in your code. If you doing the entire assignment in R, then please submit only one markdown document for both the problems.
+
+
+```{r}
+A = matrix(c(1,2,3,4,5,6,7,8,9), nrow = 3, ncol = 3)
+A
+```
+
+
+```{r}
+LU = function(X) {
+  Y = diag(nrow(X))
+  for (i in 2: (nrow(X))) {
+    for (j in i: (nrow(X))) {
+      temp = X[j, i-1] / X[i-1, i-1]
+             X[j,] = X[j,] - (X[j, i-1] / X[i-1, i-1]) * X[i-1,]
+             Y[j, i-1] = temp
+    }
+  }
+  print(X)
+  print(Y)
+  return(X%*%Y)
+}
+
+Y = LU(A)
+```
+
+```{r}
+Y
+```
+
+Rpubs => https://rpubs.com/gunduzhazal/999024
+
+
+
